@@ -1,11 +1,13 @@
 const express = require('express');
 const mongoose = require('mongoose');
-
+const fileUpload = require('express-fileupload');
 require('dotenv').config();
 
 const app = express();
 
 app.use(express.json());
+app.use(express.static('static'));
+app.use(fileUpload({}));
 
 const port = process.env.PORT || 8080;
 

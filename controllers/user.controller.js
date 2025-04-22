@@ -13,7 +13,7 @@ class UserController {
 
   async create(req, res) {
     try {
-      const createUser = await userService.createUser(req.body);
+      const createUser = await userService.createUser(req.body, req.files.picture);
       res.status(201).send(createUser);
     } catch (error) {
       res.status(501).send(`This is Error -- ${error}`);

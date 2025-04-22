@@ -1,9 +1,11 @@
 const User = require('../models/user.model');
+const fileService = require('./file.service');
 
 class UserServices {
-  async createUser(user) {
-    const { fullName, password, email } = user;
-    const userCreate = await User.create({ fullName, password, email });
+  async createUser(user, picture) {
+    // const { fullName, password, email } = user;
+    const fileName = fileService.save(picture);
+    const userCreate = await User.create({ ...user, picture: fileName });
 
     return userCreate;
   }
