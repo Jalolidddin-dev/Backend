@@ -7,9 +7,11 @@ import { Input } from '../ui/input';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Link } from 'react-router-dom';
+import { useAuth } from '@/hooks/use-auth';
 
 function ForgotPassword() {
+  const { setAuth } = useAuth();
+
   const form = useForm<z.infer<typeof forgotPasswordSchema>>({
     resolver: zodResolver(forgotPasswordSchema),
     defaultValues: {
@@ -21,16 +23,21 @@ function ForgotPassword() {
     console.log(values);
   }
   return (
-    <div className='mt-24 w-72'>
+    <>
       <div>
-        <h1>Forgot Password</h1>
-        <h4>
+        <h1 className='text-2xl font-bold'>Forgot Password</h1>
+        <h4 className='text-sm text-muted-foreground'>
           Don't have an account?
-          <Link to={'/register'}>Sign up</Link>
+          <span
+            className='cursor-pointer text-blue-600 hover:underline'
+            onClick={() => setAuth('register')}
+          >
+            Sign up
+          </span>
         </h4>
       </div>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
+        <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8 mt-6'>
           <FormField
             control={form.control}
             name='email'
@@ -44,10 +51,12 @@ function ForgotPassword() {
             )}
           />
 
-          <Button type='submit'>Send</Button>
+          <Button type='submit' size={'sm'}>
+            Send
+          </Button>
         </form>
       </Form>
-    </div>
+    </>
   );
 }
 

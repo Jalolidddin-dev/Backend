@@ -59,7 +59,7 @@ function Navbar() {
                 <DropdownMenuItem>Logout</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-            <Link to={'/login'}>
+            <Link to={'/auth'}>
               <Button size={'lg'} className='rounded-full font-bold'>
                 Login
               </Button>

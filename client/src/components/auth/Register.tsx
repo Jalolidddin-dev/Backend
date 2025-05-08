@@ -7,9 +7,11 @@ import { Input } from '../ui/input';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Link } from 'react-router-dom';
+import { useAuth } from '@/hooks/use-auth';
 
 function Register() {
+  const { setAuth } = useAuth();
+
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
@@ -22,13 +24,18 @@ function Register() {
     console.log(values);
   }
   return (
-    <div className='mt-24 w-72'>
+    <>
       <div>
-        <h1>Register</h1>
-        <h4>
+        <h1 className='text-2xl font-bold'>Register</h1>
+        <h4 className='text-sm text-muted-foreground'>
           {' '}
           Already have an account?
-          <Link to={'/login'}>Sign In</Link>
+          <span
+            className='cursor-pointer text-blue-600 hover:underline'
+            onClick={() => setAuth('login')}
+          >
+            Sign In
+          </span>
         </h4>
       </div>
       <Form {...form}>
@@ -58,12 +65,17 @@ function Register() {
             )}
           />
           <div className='flex justify-end'>
-            <Link to={'/forgot-password'}>Forgot Password</Link>
+            <span
+              className='text-sm text-blue-600 cursor-pointer hover:underline'
+              onClick={() => setAuth('forgot-password')}
+            >
+              Forgot Password
+            </span>
           </div>
           <Button type='submit'>Register</Button>
         </form>
       </Form>
-    </div>
+    </>
   );
 }
 
