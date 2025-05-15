@@ -12,8 +12,11 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
 } from '../ui/dropdown-menu';
+import { useState } from 'react';
 
 function Navbar() {
+  const [isAuth, setIsAuth] = useState(false);
+  console.log(setIsAuth);
   return (
     <div>
       <div className='w-full h-24 bg-gray-900 fixed inset-0'>
@@ -40,30 +43,32 @@ function Navbar() {
             </Button>
 
             {/* <Loader2 className='animate-spin' /> */}
-
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Avatar className='cursor-pointer'>
-                  <AvatarImage src='https://github.com/shadcn.png' />
-                  <AvatarFallback>CN</AvatarFallback>
-                </Avatar>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <p className='text-sm text-red-400 text-center'>
-                  User is not activated
-                </p>
-                <DropdownMenuLabel className='line-clamp-1'>
-                  examle@gmail.com
-                </DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>Logout</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-            <Link to={'/auth'}>
-              <Button size={'lg'} className='rounded-full font-bold'>
-                Login
-              </Button>
-            </Link>
+            {isAuth ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Avatar className='cursor-pointer'>
+                    <AvatarImage src='https://github.com/shadcn.png' />
+                    <AvatarFallback>CN</AvatarFallback>
+                  </Avatar>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <p className='text-sm text-red-400 text-center'>
+                    User is not activated
+                  </p>
+                  <DropdownMenuLabel className='line-clamp-1'>
+                    examle@gmail.com
+                  </DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem>Logout</DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <Link to={'/auth'}>
+                <Button size={'lg'} className='rounded-full font-bold'>
+                  Login
+                </Button>
+              </Link>
+            )}
           </div>
         </div>
       </div>

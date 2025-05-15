@@ -12,7 +12,8 @@ app.use(fileUpload({}));
 const port = process.env.PORT || 8080;
 
 // Router
-app.use('/api/user', require('./routes/user.route'));
+app.use('/api/card', require('./routes/card.route'));
+app.use('/api/auth', require('./routes/auth.route'));
 
 // connect to db
 const connectDb = () => {
