@@ -32,6 +32,17 @@ class AuthController {
       next(error);
     }
   }
+
+  async logout(req, res, next) {
+    try {
+      const { email } = req.body;
+      const user = await authService.logout(email);
+
+      return res.json({ user });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 module.exports = new AuthController();

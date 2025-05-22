@@ -1,9 +1,19 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const fileUpload = require('express-fileupload');
+const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
+
+app.use(
+  cors({
+    credentials: true,
+    origin: process.env.CLIENT_URL,
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+  })
+);
 
 app.use(express.json());
 app.use(express.static('static'));

@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '../ui/button';
 // import { Loader2 } from 'lucide-react';
 import {
@@ -12,13 +12,29 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
 } from '../ui/dropdown-menu';
-import { useState } from 'react';
+import { authStore } from '@/store/auth.store';
+import $axios from '@/http';
+import { IUser } from '@/types';
 
 function Navbar() {
-  const [isAuth, setIsAuth] = useState(false);
-  console.log(setIsAuth);
+  const { isAuth, setIsAuth, data, isLoading, setUser } = authStore();
+
+  const navigate = useNavigate();
+
+  const logout = async () => {
+    try {
+      await $axios.post('/auth/logout');
+      setIsAuth(false);
+      setUser({} as IUser);
+      navigate('/auth');
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  console.log(data);
   return (
-    <div>
+    <>
       <div className='w-full h-24 bg-gray-900 fixed inset-0'>
         <div className='w-full h-full flex justify-between items-center px-12'>
           <Link
@@ -34,13 +50,15 @@ function Navbar() {
           </ul>
 
           <div className='flex gap-2 items-center'>
-            <Button
-              className='rounded-full font-bold'
-              size={'lg'}
-              variant={'outline'}
-            >
-              Create Post
-            </Button>
+            {isAuth && (
+              <Button
+                className='rounded-full font-bold'
+                size={'lg'}
+                variant={'outline'}
+              >
+                Create Card
+              </Button>
+            )}
 
             {/* <Loader2 className='animate-spin' /> */}
             {isAuth ? (
@@ -56,10 +74,10 @@ function Navbar() {
                     User is not activated
                   </p>
                   <DropdownMenuLabel className='line-clamp-1'>
-                    examle@gmail.com
+                    {data.email}
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem>Logout</DropdownMenuItem>
+                  <DropdownMenuItem onClick={logout}>Logout</DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
@@ -72,7 +90,7 @@ function Navbar() {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

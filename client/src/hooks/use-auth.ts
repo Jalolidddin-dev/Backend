@@ -1,4 +1,4 @@
-import { AuthType } from '../../types'
+import { AuthType } from '../types'
 import { create } from 'zustand'
 
 type AuthStore = {
