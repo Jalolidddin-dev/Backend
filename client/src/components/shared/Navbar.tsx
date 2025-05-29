@@ -15,8 +15,13 @@ import {
 import { authStore } from '@/store/auth.store';
 import $axios from '@/http';
 import { IUser } from '@/types';
+import { useCreatePost } from '@/hooks/use-create-post';
+import CreateCard from '../create-card';
+import { Loader2 } from 'lucide-react';
 
 function Navbar() {
+  const { onOpen } = useCreatePost();
+
   const { isAuth, setIsAuth, data, isLoading, setUser } = authStore();
 
   const navigate = useNavigate();
@@ -32,7 +37,6 @@ function Navbar() {
     }
   };
 
-  console.log(data);
   return (
     <>
       <div className='w-full h-24 bg-gray-900 fixed inset-0'>
@@ -43,11 +47,6 @@ function Navbar() {
           >
             .dev
           </Link>
-          <ul className='flex gap-4'>
-            <li>Home</li>
-            <li>About</li>
-            <li>Contact</li>
-          </ul>
 
           <div className='flex gap-2 items-center'>
             {isAuth && (
@@ -55,13 +54,14 @@ function Navbar() {
                 className='rounded-full font-bold'
                 size={'lg'}
                 variant={'outline'}
+                onClick={onOpen}
               >
                 Create Card
               </Button>
             )}
-
-            {/* <Loader2 className='animate-spin' /> */}
-            {isAuth ? (
+            {isLoading ? (
+              <Loader2 className='animate-spin' />
+            ) : isAuth ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Avatar className='cursor-pointer'>
@@ -90,6 +90,8 @@ function Navbar() {
           </div>
         </div>
       </div>
+
+      <CreateCard />
     </>
   );
 }

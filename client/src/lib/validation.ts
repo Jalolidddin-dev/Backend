@@ -12,3 +12,7 @@ export const loginSchema = z.object({
 export const forgotPasswordSchema = z.object({
   email: z.string().min(2).max(50),
 });
+
+export const cardSchema = z.object({
+  body: z.string(),
+});

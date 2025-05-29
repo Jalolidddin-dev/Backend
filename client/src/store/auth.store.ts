@@ -12,7 +12,7 @@ type AuthStoreType = {
 
 export const authStore = create<AuthStoreType>((set) => ({
   isLoading: false,
-  isAuth: false,
+  isAuth: true,
   data: {} as IUser,
   setUser: (data) => set({ data }),
   setLoading: (bool) => set({ isLoading: bool }),
