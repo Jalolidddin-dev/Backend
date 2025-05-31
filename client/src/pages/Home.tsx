@@ -1,3 +1,4 @@
+import ConfirmModal from '@/components/modals/confirm.modal';
 import CardLoading from '@/components/shared/CardLoading';
 import ProductCards from '@/components/shared/ProductCards';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
@@ -35,6 +36,8 @@ function Home() {
           <ProductCards key={card._id} card={card} />
         ))}
       </div>
+
+      <ConfirmModal />
     </div>
   );
 }

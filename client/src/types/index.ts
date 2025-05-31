@@ -1,12 +1,12 @@
 export interface ICard {
   _id: string;
   // title: string;
-  // describtion: string;
+  describtion: string;
   // creadAt: string;
   body: string;
   // category: string;
   // author: string;
-  // picture: string;
+  picture: string;
 }
 
 export interface IUser {

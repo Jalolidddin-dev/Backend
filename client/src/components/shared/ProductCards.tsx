@@ -18,7 +18,7 @@ import { cardSchema } from '@/lib/validation';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import $axios from '@/http';
+import $axios, { API_URL } from '@/http';
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import FillLoading from './fill-loading';
@@ -27,9 +27,14 @@ function ProductCards({ card }: { card: ICard }) {
   const [open, setOpen] = useState(false);
   const { cards, setCards } = cardStore();
   const { onOpen, setCard } = useConfirm();
+
+
   const onDelete = () => {
     onOpen();
     setCard(card);
+
+    console.log(card)
+    console.log('delete')
   };
 
   const { mutate, isPending } = useMutation({
@@ -64,16 +69,24 @@ function ProductCards({ card }: { card: ICard }) {
   return (
     <div>
       <Card>
-        <CardContent>
-          <h3>{card.body}</h3>
+        <img
+          src={`${API_URL}/${card.picture}`}
+          alt={card.body}
+          className='rounded-t-md'
+        />
+        <CardContent className='mt-2'>
+          <p className='text-xl font-bold text-center'>{card.body}</p>
         </CardContent>
-        <CardFooter className='g-2'>
-          <Button variant={'destructive'} onClick={onDelete}>
+        <CardContent className='mt-2'>
+          <p>{card.describtion}</p>
+        </CardContent>
+        <CardFooter className='gap-2'>
+          <Button variant={'destructive'} className='w-1/2' onClick={onDelete}>
             Delete
           </Button>
           <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
-              <Button>Edit</Button>
+              <Button className='w-1/2'>Edit</Button>
             </PopoverTrigger>
             <PopoverContent className='w-96 relative'>
               {isPending && <FillLoading />}

@@ -15,4 +15,6 @@ export const forgotPasswordSchema = z.object({
 
 export const cardSchema = z.object({
   body: z.string(),
+  picture: z.string(),
+  describtion: z.string().min(10),
 });

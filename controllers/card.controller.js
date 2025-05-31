@@ -13,7 +13,7 @@ class CardController {
 
   async createCard(req, res, next) {
     try {
-      const card = await cardService.createCard(req.body);
+      const card = await cardService.createCard(req.body, req.files.picture);
       res.status(201).json(card);
     } catch (error) {
       next(error);
